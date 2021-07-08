@@ -10,7 +10,7 @@ import Checkout from './pages/Checkout';
 import ProductDetails from './pages/ProductDetails';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
-
+import './index.css';
 // components
 import Header from './components/Header';
 

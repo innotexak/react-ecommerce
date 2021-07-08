@@ -8,7 +8,7 @@ export default function Login() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [username, setUsername] = React.useState('');
-  const [isMember, setIsMember] = React.useState(true);
+  const [isMember, setIsMember] = React.useState(false);
 
   let isEmpty = !email || !password || !username;
 
@@ -18,7 +18,6 @@ export default function Login() {
     // } else {
     //   setIsMember(true);
     // }
-
     setIsMember((currMember) => {
       let isMember = !currMember;
       isMember ? setUsername('default') : setUsername('');
@@ -28,47 +27,60 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let response;
+    if (isMember) {
+      // handle login
+      // response = await loginUser();
+    } else {
+      // handle register
+      response = await registerUser({ password, email, username });
+      setPassword('');
+      setEmail('');
+      setUsername('');
+    }
+    if (response) {
+      // handle response
+      console.log('success');
+      console.log(response);
+    } else {
+      // show alert
+    }
   };
 
   return (
-    <div className="section form">
-      <h2 className="section-title">{isMember ? 'Sign in' : 'register'}</h2>
-      <form className="login-form">
-        {/* single input */}
-        <div className="form-control">
+    <section className="form section">
+      <h2 className="section-title"> {isMember ? 'login' : 'register'}</h2>
+      <form action="" className="login-form">
+        <div className="form-controls">
           <label htmlFor="email">Email</label>
           <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        {/* end single input */}
 
-        {/* single input */}
-        <div className="form-control">
-          <label htmlFor="password">password</label>
+        <div className="form-controls">
+          <label htmlFor="password">Password</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        {/* end single input */}
-
-        {/* single input */}
         {!isMember && (
-          <div className="form-control">
+          <div className="form-controls">
             <label htmlFor="username">Username</label>
-            <input type="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
         )}
-        {/* end single input */}
-        {isEmpty && <p className="form-empty">Please fill out the form</p>}
-        {!isEmpty && (
-          <button className="btn btn-block btn-primary" onClick={handleSubmit}>
-            submit
+        {isEmpty ? (
+          <p className="form-empty">Please fill all the fields</p>
+        ) : (
+          <button type="button" onClick={handleSubmit} className="btn btn-block btn-primary">
+            Submit
           </button>
         )}
+
         <p className="register-link">
-          {isMember ? 'need to register' : 'already a member'}
+          {isMember ? 'Need to register' : 'Already a member'}{' '}
           <button type="button" onClick={toggleMember}>
             click here
           </button>
         </p>
       </form>
-    </div>
+    </section>
   );
 }

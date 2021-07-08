@@ -478,23 +478,30 @@ Login Form
 }
 .login-form,
 .checkout-form {
+
   background: var(--mainWhite);
   padding: 1.25rem 1rem;
   text-transform: capitalize;
   border-radius: var(--mainBorderRadius);
   box-shadow: var(--lightShadow);
+
+}
+.form-controls{
+  width:100%;
+  display:block;
+  height: auto;
 }
 
-.form-control label {
+.form-controls label{
   display: block;
 }
-.form-control input {
+.form-controls input {
   width: 100%;
   border: none;
   border-bottom: 2px solid var(--darkGrey);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.12rem;
   padding: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .form-empty,
 .stripe-errors {

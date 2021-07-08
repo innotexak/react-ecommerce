@@ -27,7 +27,7 @@ export default function ProductDetails() {
           </h2>
           <p>{description}</p>
           <button
-          
+            className="btn-primary"
             onClick={() => {
               addToCart(product);
               history.push('/cart');
