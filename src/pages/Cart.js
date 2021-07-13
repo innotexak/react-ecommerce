@@ -7,7 +7,7 @@ import { UserContext } from '../context/user';
 import Checkout from './Checkout';
 
 export default function Cart() {
-  const user = true;
+  const { user } = React.useContext(UserContext);
   const { total, cart } = React.useContext(CartContext);
 
   if (cart.length === 0) {
@@ -20,7 +20,7 @@ export default function Cart() {
         return <CartItem key={item.id} {...item} />;
       })}
       <h2>total:NGN{total}</h2>
-      {user ? (
+      {user.token ? (
         <Link to="/checkout" className="btn btn-primary btn-block">
           Checkout
         </Link>

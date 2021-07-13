@@ -7,6 +7,7 @@ export default function Products() {
 
   if (loading) {
     return <Loading />;
+  } else {
+    return <ProductList title="our products" products={products} />;
   }
-  return <ProductList title="our products" products={products} />;
 }

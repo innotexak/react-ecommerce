@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import CartLink from './Cart/CartLink';
+import { UserContext } from '../context/user';
+import { CartContext } from '../context/cart';
+import LoginLink from '../components/LoginLink';
 export default function Header() {
+  const { user } = React.useContext(UserContext);
+
   return (
     <header className="header">
       <img src={logo} alt=" site logo" className="logo" />
@@ -18,10 +23,15 @@ export default function Header() {
             <li>
               <Link to="/products">Products</Link>
             </li>
+            {user.token && (
+              <li>
+                <Link to="/checkout">Checkout</Link>
+              </li>
+            )}
           </div>
           <div>
             <li>
-              <Link to="/login">Login</Link>
+              <LoginLink></LoginLink>
             </li>
             <li>
               <CartLink to="/cart"></CartLink>

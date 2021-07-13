@@ -10,14 +10,18 @@ import Checkout from './pages/Checkout';
 import ProductDetails from './pages/ProductDetails';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
+
 import './index.css';
 // components
 import Header from './components/Header';
+import Alert from './components/Alert';
+import PrivateRoute from './components/PrivateRoute';
 
 export default function App() {
   return (
     <Router>
       <Header />
+      <Alert />
       <Switch>
         <Route exact path="/">
           <Home />
@@ -32,9 +36,9 @@ export default function App() {
           <Products />
         </Route>
         <Route exact path="/products/:id" children={<ProductDetails />}></Route>
-        <Route exact path="/checkout">
+        <PrivateRoute exact path="/checkout">
           <Checkout />
-        </Route>
+        </PrivateRoute>
         <Route exact path="/cart">
           <Cart />
         </Route>
