@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { CartContext } from '../../context/cart';
+import { FiDelete } from 'react-icons/fi';
 export default function CartItem({ id, price, title, amount, image }) {
   const { removeItem, increaseAmount, decreaseAmount } = React.useContext(CartContext);
 
@@ -11,7 +12,7 @@ export default function CartItem({ id, price, title, amount, image }) {
         <h4>{title}</h4>
         <h5>NGN{price}</h5>
         <button type="button" className="cart-btn remove-btn" onClick={() => removeItem(id)}>
-          remove{' '}
+          <FiDelete />{' '}
         </button>
       </div>
       <div>

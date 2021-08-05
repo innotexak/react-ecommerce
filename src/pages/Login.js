@@ -43,10 +43,11 @@ export default function Login() {
       // handle response
       const {
         jwt: token,
-        user: { username },
+        user: { username }, 
+        email:email
       } = response.data;
 
-      const newUser = { token, username };
+      const newUser = { token, username,email };
       LoginUser(newUser);
       showAlert({ msg: `You are logged in as ${username}. Continue shopping` });
       history.push('/products');

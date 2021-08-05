@@ -16,6 +16,7 @@ import './index.css';
 import Header from './components/Header';
 import Alert from './components/Alert';
 import PrivateRoute from './components/PrivateRoute';
+import Footer from "./components/Footer"
 
 export default function App() {
   return (
@@ -46,6 +47,7 @@ export default function App() {
           <Error />
         </Route>
       </Switch>
+      <Footer /> 
     </Router>
   );
 }

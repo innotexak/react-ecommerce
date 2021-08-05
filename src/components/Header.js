@@ -1,19 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.svg';
+import logo from '../long.png';
 import CartLink from './Cart/CartLink';
 import { UserContext } from '../context/user';
 import { CartContext } from '../context/cart';
 import LoginLink from '../components/LoginLink';
-export default function Header() {
+export default function () {
   const { user } = React.useContext(UserContext);
 
   return (
     <header className="header">
-      <img src={logo} alt=" site logo" className="logo" />
+      <img src={logo} alt=" site logo" className="logo sm" />
       <nav>
         <ul>
+        <div>
+       
           <div>
+            <li>
+           <img src={logo} alt=" site logo" className="logo lg" /></li>
+        </div>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -28,17 +33,18 @@ export default function Header() {
                 <Link to="/checkout">Checkout</Link>
               </li>
             )}
-          </div>
-          <div>
-            <li>
+            <div className="divider"></div>
+              <li>
               <LoginLink></LoginLink>
             </li>
             <li>
               <CartLink to="/cart"></CartLink>
             </li>
           </div>
+         
         </ul>
       </nav>
+      <hr></hr>
     </header>
   );
 }

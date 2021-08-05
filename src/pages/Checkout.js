@@ -3,59 +3,12 @@ import { CartContext } from '../context/cart';
 import { UserContext } from '../context/user';
 import EmptyCart from '../components/Cart/EmptyCart';
 import { useHistory } from 'react-router-dom';
-
-// flutterwave
-
-// import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
-
-// export default function App() {
-
-//   function Checkout() {
-//     const { cart, total, clearCart } = React.useContext(CartContext);
-//     const { alert, showAlert, hideAlert, user } = React.useContext(UserContext);
-
-//     const history = useHistory();
-//     const [name, setName] = React.useState('');
-//     const [error, setError] = React.useState('');
-//     const isEmpty = !name || alert.show;
-//   const config = {
-//     public_key: '',
-//     tx_ref: Date.now(),
-//     amount: total,
-//     currency: 'NGN',
-//     payment_options: 'card,mobilemoney,ussd',
-//     customer: {
-//       email: user.email,
-//       phonenumber: user.phone,
-//       name: user.username,
-//     },
-//     customizations: {
-//       title: 'PearlStecy store',
-//       description: 'Payment for items in cart',
-//       logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-//     },
-//   };
-
-//   const fwConfig = {
-//     ...config,
-//     text: 'Pay Now!',
-//     callback: (response) => {
-//       console.log(response);
-//       closePaymentModal(); // this will close the modal programmatically
-//     },
-//     onClose: () => {},
-//   };
-
-//   return (
-//     <div className="App">
-//       <h1>Pay With Flutterwave</h1>
-//       <FlutterWaveButton {...fwConfig} />
-//     </div>
-//   );
-// }
-
-// strip elements
-
+import submitOrder from '../strapi/submitOrder';
+import Flutter from '../components/Flutter';
+import PayStack from '../components/PayStack';
+import {FaStripe, FaCcStripe} from 'react-icons/fa'
+ import {FaAmazonPay} from 'react-icons/fa'
+ import {HiMenuAlt2} from 'react-icons/hi'
 import { Elements, CardElement, injectStripe, StripeProvider } from 'react-stripe-elements';
 
 function Checkout(props) {
@@ -64,10 +17,29 @@ function Checkout(props) {
 
   const history = useHistory();
   const [name, setName] = React.useState('');
+ 
   const [error, setError] = React.useState('');
   const isEmpty = !name || alert.show;
   async function handleSubmit(e) {
+    showAlert({ msg: 'submitting payment order... please wait.' });
     e.preventDefault();
+
+    const response = await props.stripe.createToken().catch((err) => console.log(err));
+    const { token } = response;
+    if (token) {
+      hideAlert('');
+      const { id } = token;
+      let order = await submitOrder({ total: total, name: name, items: cart, stripeTokenId: id, userToken: user.token });
+      if (order) {
+        showAlert({ msg: 'Your order was successful!' });
+        clearCart();
+        history.push('/');
+      } else {
+        showAlert({ msg: 'something went wrong... please try again!', type: 'danger' });
+      }
+    } else {
+      setError(response.error.message);
+    }
   }
 
   if (cart.length < 1) {
@@ -78,35 +50,53 @@ function Checkout(props) {
     <section className="section form">
       <h2 className="section-title">checkout</h2>
       <form className="checkout-form">
-        <h3>
+      
+        <h3 className="price-control">
           Order total: <span>NGN {total}</span>
         </h3>
+          <h3 className="form-empty icon"><FaCcStripe/> </h3>
+        <h3 className="form-empty">Pay with Stripe</h3>
         <div className="form-controls">
-          <label htmlFor="name">Your name</label>
+          <label htmlFor="name">Name</label>
           <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+           <label htmlFor="name">Phone Number</label>
+          {/* <input type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <label htmlFor="address">Delivery Address</label>
+          <input type="text" id="address" value={address} onChange={(e) => setAddress(e.target.value)} /> */}
         </div>
+        <br />
+      
+        <CardElement className="card-element"></CardElement>
 
         {error && <p className="form-empty">{error}</p>}
         {isEmpty ? (
           <p className="form-empty"> Please fill out the name field</p>
         ) : (
-          <button className="btn btn-primary btn-block" onClick={handleSubmit}>
+          <button className="btn btn-primary" onClick={handleSubmit}>
             Submit
           </button>
         )}
       </form>
+
+      <div className="checkout-form">
+      <h3 className="form-empty icon2"> <HiMenuAlt2/></h3>
+        <h3 className="form-empty">Pay with PayStack</h3>
+        <PayStack /> 
+      </div>
     </section>
   );
 }
 
 const CardForm = injectStripe(Checkout);
 
-export default StripeWrapper = () => {
+const StripeWrapper = () => {
   return (
-    <StripeProvider apiKey="pk_test_51HClQuLq0gfgwTXfEJeYfjqmJWXr4n8ekwsMStJqp8mD4JotkhWghLlLn34LayGcbqhkkO6jyWxAIuPoty2h4Fkp007bF2WaqI">
+    <StripeProvider apiKey='pk_test_51HClQuLq0gfgwTXfEJeYfjqmJWXr4n8ekwsMStJqp8mD4JotkhWghLlLn34LayGcbqhkkO6jyWxAIuPoty2h4Fkp007bF2WaqI'>
       <Elements>
         <CardForm />
       </Elements>
     </StripeProvider>
   );
 };
+
+export default StripeWrapper;
