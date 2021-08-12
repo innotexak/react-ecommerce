@@ -2,7 +2,7 @@
 import React from 'react';
 const UserContext = React.createContext();
 const getLocalUser = () => {
-  return localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : { username: null, token: null };
+  return localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : { username: null, token: null};
 };
 function UserProvider({ children }) {
   const [user, setUser] = React.useState(getLocalUser());
@@ -13,7 +13,7 @@ function UserProvider({ children }) {
   };
 
   const logoutUser = () => {
-    setUser({ username: null, token: null });
+    setUser({ username: null, token: null});
   };
 
   const [alert, setAlert] = React.useState({ show: false, msg: '', type: 'danger' });

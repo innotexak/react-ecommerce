@@ -531,6 +531,15 @@ Login Form
   color:coral;
   font-size:3rem;
 }
+
+.btn-container{
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+}
+.space{
+  width:10%;
+}
 .icon2{
   color:skyblue;
   font-size:3rem;
@@ -892,4 +901,14 @@ Footer Section
 }
 .designer:hover{
   color:green;
+}
+
+.method{
+  background:var(--mainBlack);
+
+}
+
+.flut{
+  width:200px;
+  background:transparent;
 }

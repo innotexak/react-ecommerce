@@ -47,7 +47,7 @@ function PayStack() {
             <div>
                 <button onClick={() => {
                     initializePayment(onSuccess, onClose)
-                }} className="btn btn-secondary">Pay Now</button>
+                }} className="btn method">Pay Now</button>
             </div>
         );
     };

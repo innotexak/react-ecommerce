@@ -16,10 +16,10 @@ function Flutter() {
     tx_ref: Date.now(),
     amount: total,
     currency: 'NGN',
-    payment_options: 'card,ussd',
+    payment_options: 'card',
     customer: {
-      email: `${user.email}`,
-      phone_number: `${user.phone}`,
+      email: "innotexak@yahoo.com",
+      phone_number: '08168653156',
       name: `${user.username}`,
     },
     customizations: {
@@ -40,7 +40,7 @@ function Flutter() {
 
   return (
     <div className="flutter_div">
-      <FlutterWaveButton {...fwConfig} className="btn btn-primary" />
+      <FlutterWaveButton {...fwConfig} className="btn method" />
     </div>
   );
 }
