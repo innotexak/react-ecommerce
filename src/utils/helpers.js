@@ -10,7 +10,7 @@ export function flattenedProducts(data) {
   // console.log(data);
   return data.map((item) => {
     // console.log(item.image[0].url);
-    let image = `${URL}${item.image[0].url}`;
+    let image = `${item.image[0].url}`;
     console.log(image);
     // console.log(image);
     return { ...item, image };
