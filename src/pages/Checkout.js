@@ -6,15 +6,15 @@ import { useHistory } from 'react-router-dom';
 import submitOrder from '../strapi/submitOrder';
 import Flutter from '../components/Flutter';
 import PayStack from '../components/PayStack';
-import {FaStripe, FaCcStripe} from 'react-icons/fa'
- import {FaAmazonPay} from 'react-icons/fa'
- import {HiMenuAlt2} from 'react-icons/hi'
+// import {FaStripe, FaCcStripe} from 'react-icons/fa'
+//  import {FaAmazonPay} from 'react-icons/fa'
+//  import {HiMenuAlt2} from 'react-icons/hi'
  import flutterLogo from '../flutter.png'
 import { Elements, CardElement, injectStripe, StripeProvider } from 'react-stripe-elements';
 
 function Checkout(props) {
   const { cart, total, clearCart } = React.useContext(CartContext);
-  const { alert, showAlert, hideAlert, user } = React.useContext(UserContext);
+  // const { alert, showAlert, hideAlert, user } = React.useContext(UserContext);
 
   const [payWithFlutter, setPayWithFlutter]= React.useState(false)
   const [payWithStack, setPayWithStack]= React.useState(false)
